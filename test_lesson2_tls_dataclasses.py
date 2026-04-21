@@ -1,6 +1,6 @@
 import ssl
 
-from student import lesson2_tls_dataclasses as lesson2
+import lesson2_tls_dataclasses as lesson2
 
 
 def test_ca_creation(tmp_path):

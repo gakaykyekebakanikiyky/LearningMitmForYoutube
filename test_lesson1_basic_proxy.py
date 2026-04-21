@@ -2,7 +2,7 @@ import socket
 
 import pytest
 
-from student import lesson1_basic_proxy as lesson1
+import lesson1_basic_proxy as lesson1
 
 
 def test_parse_connect_request_with_port():
