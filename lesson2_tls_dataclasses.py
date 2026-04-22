@@ -6,22 +6,20 @@ import os
 import tempfile
 from asyncio import timeout
 from dataclasses import dataclass
-from distutils.command.config import config
-from lib2to3.fixes.fix_input import context
 from pathlib import Path
 import socket
 import socketserver
 import ssl
 from socket import create_connection
-from ssl import wrap_socket
+import ssl
 from typing import Tuple
 from wsgiref.simple_server import server_version
 
 from cryptography import x509
 from cryptography.hazmat.primitives.asymmetric import rsa
 
-from proxy import bridge_streams, load_or_create_ca_material, generate_cert_for_host
-from student.lesson1_basic_proxy import _read_connect_line, _send_connection_response, parse_connect_request, \
+from core import bridge_streams, load_or_create_ca_material, generate_cert_for_host
+from lesson1_basic_proxy import _read_connect_line, _send_connection_response, parse_connect_request, \
     handle_plain_tunnel
 
 

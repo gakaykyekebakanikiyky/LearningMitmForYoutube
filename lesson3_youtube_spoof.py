@@ -5,11 +5,11 @@ from __future__ import annotations
 import socket
 import socketserver
 
-from proxy import bridge_streams, get_spoof_target, load_spoof_map
-from student.lesson1_basic_proxy import _read_connect_line, _send_connection_response, parse_connect_request ,_extract_target, handle_plain_tunnel
+from core import bridge_streams, get_spoof_target, load_spoof_map
+from lesson1_basic_proxy import _read_connect_line, _send_connection_response, parse_connect_request ,_extract_target, handle_plain_tunnel
 from typing import Dict
 
-from student.lesson2_tls_dataclasses import CertificateAuthority, ProxyConfig, build_tls_contexts, wrap_client_socket, \
+from lesson2_tls_dataclasses import CertificateAuthority, ProxyConfig, build_tls_contexts, wrap_client_socket, \
     connect_upstream
 
 
@@ -70,8 +70,9 @@ def handle_connect_request(
     """Выбрать обычный или спуфнутый сценарий."""
     flag = should_spoof(dest , rules)
     host, port = parse_connect_request(dest)
+    print(host, port)
     if flag:
-        print("dads")
+        #print("dads")
         build_spoofed_tunnel(client_sock,dest,flag,config,ca)
         print("перенаправляем из " ,dest,"в",flag)
     else:
@@ -92,6 +93,7 @@ class _SpoofingHandler(socketserver.BaseRequestHandler):
                 _send_connection_response(cs, "HTTP/1.1 405 Method Not Allowed")
                 return
             h, p = parse_connect_request(r)
+
             _send_connection_response(cs, "HTTP/1.1 200 Connection Established")
             handle_connect_request(cs,_extract_target(r), sr.config , sr.ca, sr.rules )
 

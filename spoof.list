@@ -1,2 +1,4 @@
 # Format: origin_domain -> spoof_to_domain
 youtube.com -> www.google.com
+ytimg.com -> www.google.com
+googlevideo.com -> c.drive.google.com

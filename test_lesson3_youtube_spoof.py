@@ -1,5 +1,5 @@
-from student import lesson2_tls_dataclasses as lesson2
-from student import lesson3_youtube_spoof as lesson3
+import lesson2_tls_dataclasses as lesson2
+import lesson3_youtube_spoof as lesson3
 
 
 def test_load_spoof_rules_reads_file(tmp_path):

@@ -6,10 +6,10 @@ import argparse
 import signal
 from pathlib import Path
 
-from proxy import load_or_create_ca_material
-from student import lesson1_basic_proxy as lesson1
-from student import lesson2_tls_dataclasses as lesson2
-from student import lesson3_youtube_spoof as lesson3
+from core import load_or_create_ca_material
+import lesson1_basic_proxy as lesson1
+import lesson2_tls_dataclasses as lesson2
+import lesson3_youtube_spoof as lesson3
 
 
 def _parse_args() -> argparse.Namespace:

@@ -1,11 +1,11 @@
 """Урок 1. Базовый CONNECT-прокси без TLS."""
 
-from proxy.core import  DEFAULT_BUFFER_SIZE
+from core import  DEFAULT_BUFFER_SIZE
 import socket
 import socketserver
 import threading
 from typing import Callable, Tuple
-from proxy.core import bridge_streams
+from core import bridge_streams
 
 # TODO: реализуйте вспомогательные функции, а затем сборку сервера.
 
@@ -34,7 +34,10 @@ def _send_connection_response(client_sock: socket.socket, status_line: str) -> N
 
 def parse_connect_request(request_line: str) -> Tuple[str, int]:
     """Вернуть (host, port), даже если порт не указан явно."""
-    request_line = _extract_target(request_line)
+    if(request_line.startswith("CONNECT")):
+
+        request_line = _extract_target(request_line)
+
     for i in range(len(request_line)):
         if request_line[i] == ':':
             request_line = request_line.split(request_line[i])
@@ -43,7 +46,7 @@ def parse_connect_request(request_line: str) -> Tuple[str, int]:
             a2 = int(a2)
             return a1, a2
     return request_line , 443
-        
+
 
 
 
@@ -60,9 +63,10 @@ def handle_plain_tunnel(
     socket_factory: Callable[[str, int], socket.socket] | None = None,
 ) -> None:
     """Организовать двунаправленный мост между клиентом и сервером."""
-    socket_factory = open_remote_socket
+    if socket_factory is None:
+        socket_factory = open_remote_socket
     sock = socket_factory(dest_host , dest_port)
-    print(f"мы открываем тунель {dest_host} , мы открываем порт {dest_port}")
+    #print(f"мы открываем тунель {dest_host} , мы открываем порт {dest_port}")
     try:
         bridge_streams(client_sock,sock)
     except Exception as e:
